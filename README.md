@@ -40,5 +40,3 @@ mvn clean install tomcat7:deploy
 Now, you can start using the APIs by sending HTTP requests to the endpoints specified in the documentation.
 ## Documentation
 
-[Films Library Documnetation]()
-
