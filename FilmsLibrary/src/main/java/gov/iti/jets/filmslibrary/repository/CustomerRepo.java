@@ -24,9 +24,9 @@ public class CustomerRepo {
     }
 
     public List<CustomerGetterDto> filterCustomers(Short id, String name, String phone, String country,  String city, String email) {
-        EntityManager em = EntityFactory.emf.createEntityManager();
+        EntityManager em = EntityFactory.getInstance().getEmf().createEntityManager();
         Query query = em.createQuery("select c from Customer c where c.customerId = coalesce(?1, c.customerId)" +
-                "and lower(c.firstName+' '+ c.lastName) = coalesce(lower(?2), lower(c.firstName+' '+ c.lastName)) " +
+                "and lower(c.firstName+' '+ c.lastName) = coalesce(lower(?2) , lower(c.firstName+' '+ c.lastName)) " +
                 "and c.addressId.phone = coalesce(?3, c.addressId.phone) " +
                 "and c.addressId.cityId.countryId.country = coalesce(?4, c.addressId.cityId.countryId.country) " +
                 "and c.addressId.cityId.city = coalesce(?5, c.addressId.cityId.city)" +
@@ -48,7 +48,7 @@ public class CustomerRepo {
 
 
     public List<CustomerGetterDto> getAllCustomers() {
-        EntityManager entityManager = EntityFactory.emf.createEntityManager();
+        EntityManager entityManager = EntityFactory.getInstance().getEmf().createEntityManager();
         Query query = entityManager.createQuery("From Customer ");
         List<CustomerGetterDto> customerGetterDtoList = new ArrayList<>();
         for (Customer customer :  ( List<Customer>) query.getResultList()) {
@@ -61,7 +61,7 @@ public class CustomerRepo {
 
     public boolean addCustomer(CustomerSetterDto customerSetterDto) {
 
-        EntityManager entityManager = EntityFactory.emf.createEntityManager();
+        EntityManager entityManager = EntityFactory.getInstance().getEmf().createEntityManager();
         entityManager.getTransaction().begin();
 
         Customer customer = customerMapper.toCustomerEntity(customerSetterDto);
@@ -80,7 +80,7 @@ public class CustomerRepo {
 
         Address address = addressRepo.updateAddress(customerSetterDto.getAddress());
 
-        EntityManager entityManager = EntityFactory.emf.createEntityManager();
+        EntityManager entityManager = EntityFactory.getInstance().getEmf().createEntityManager();
         entityManager.getTransaction().begin();
 
         Customer customer = customerMapper.toCustomerEntity(customerSetterDto);
@@ -95,7 +95,7 @@ public class CustomerRepo {
 
 
     public boolean removeCustomer(short id) {
-        EntityManager entityManager = EntityFactory.emf.createEntityManager();
+        EntityManager entityManager = EntityFactory.getInstance().getEmf().createEntityManager();
         entityManager.getTransaction().begin();
 
         Customer customer = entityManager.find(Customer.class, id);
