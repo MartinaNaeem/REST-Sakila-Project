@@ -1,5 +1,6 @@
 package gov.iti.jets.filmslibrary;
 
+import gov.iti.jets.filmslibrary.repository.EntityFactory;
 import gov.iti.jets.filmslibrary.repository.FilmRepo;
 
 import java.math.BigDecimal;
